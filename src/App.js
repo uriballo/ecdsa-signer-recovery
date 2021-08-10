@@ -1,14 +1,28 @@
 import './App.css';
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import { ethers } from 'ethers'
 import ESVT from './artifacts/contracts/ESVT.sol/ESVT.json'
+import '@fontsource/roboto'
 
 // Contract address (local)
 //const esvtAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 // Rinkeby address
 const esvtAddress = "0xb330060C65B462ebC71CDeb8C4E81f5B0394C42B"
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
+
 function App() {
+  const classes = useStyles();
   const [message, setMessageValue] = useState() // Input message
   const [messageHash, setMessageHash] = useState()
   const [signature, setSignature] = useState()
@@ -28,6 +42,7 @@ function App() {
       const contract = new ethers.Contract(esvtAddress, ESVT.abi, provider)
 
       const address = await contract.recoverOwner(messageHash, signature)
+      
       setAddress(address)
     }
   }
@@ -42,6 +57,7 @@ function App() {
       setMessageHash(messageHash)
 
       const signedMSG = await signer.signMessage(message)
+      
       setSignature(signedMSG)
     }
   }
@@ -55,16 +71,10 @@ function App() {
             ECDSA Signature Verification Tool
           </label>
         </h2>
-        <input
-          type="text"
-          id="message"
-          className="input input__lg"
-          name="text"
-          autoComplete="off"
-          onChange={e => setMessageValue(e.target.value)} placeholder="Message"
-        />
-        <button type='button' className="btn btn__primary btn__lg" onClick={signMessage}>SIGN</button>
-        <button type='button' className="btn btn__primary btn__lg" onClick={verifySignature}>VERIFY</button>
+        <TextField id="outlined-basic" label="Message" variant="outlined" onChange={e => setMessageValue(e.target.value)} fullWidth/>
+        <div>&nbsp; </div>
+        <Button variant="contained" type='button' className="btn btn__primary btn__lg" onClick={signMessage}>SIGN</Button>
+        <Button variant="contained" type='button' className="btn btn__primary btn__lg" onClick={verifySignature}>VERIFY</Button>
         <p>Original Message: {message}</p>
         <p>Message Hash: {messageHash}</p>
         <p>Signature: {signature}</p>
