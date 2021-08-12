@@ -9,6 +9,7 @@ import ESVT from './artifacts/contracts/ESVT.sol/ESVT.json'
 import '@fontsource/roboto'
 import { Tooltip } from '@material-ui/core';
 
+
 // Contract address (local)
 //const esvtAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 // GWEI cost 0.000028245
@@ -71,9 +72,8 @@ function App() {
     }
   }
 
-  function copyToClipboard(clipboardText){
-    console.log(clipboardText);
-    navigator.clipboard.writeText(clipboardText)
+  const copyToClipboard = async (clipboardText) =>{
+    await navigator.clipboard.writeText(clipboardText)
   }
 
   return (
@@ -95,8 +95,8 @@ function App() {
         <Typography variant="h4" gutterBottom>
           Original Message:
         </Typography>
-        <Tooltip title={'Click to copy!'} onClick={copyToClipboard(message)} classes={{ tooltip: classes.fontSize }}>
-          <Typography noWrap variant="h5" gutterBottom>
+        <Tooltip title={'Click to copy!'} onClick={() => { navigator.clipboard.writeText(message) }} classes={{ tooltip: classes.fontSize }}>
+          < Typography noWrap variant = "h5" gutterBottom >
             {message}
           </Typography>
         </Tooltip>
@@ -104,7 +104,7 @@ function App() {
         <Typography variant="h4" gutterBottom>
           Message Hash:
         </Typography>
-        <Tooltip title={'Click to copy!'} onClick={copyToClipboard(messageHash)} classes={{ tooltip: classes.fontSize }}>
+        <Tooltip title={'Click to copy!'} onClick={() => {copyToClipboard(messageHash)}} classes={{ tooltip: classes.fontSize }}>
           <Typography noWrap variant="h5" gutterBottom>
             {messageHash}
           </Typography>
@@ -113,7 +113,7 @@ function App() {
         <Typography variant="h4" gutterBottom>
           Signature:
         </Typography>
-        <Tooltip title={'Click to copy!'} onClick={copyToClipboard(signature)} classes={{ tooltip: classes.fontSize }}>
+        <Tooltip title={'Click to copy!'} onClick={() => {copyToClipboard(signature)}} classes={{ tooltip: classes.fontSize }}>
           <Typography noWrap variant="h5" gutterBottom>
             {signature}
           </Typography>
@@ -122,7 +122,7 @@ function App() {
         <Typography variant="h4" gutterBottom>
           Signer Address:
         </Typography>
-        <Tooltip title={'Click to copy!'} onClick={copyToClipboard(address)} classes={{ tooltip: classes.fontSize }}>
+        <Tooltip title={'Click to copy!'} onClick={() => {copyToClipboard(address)}} classes={{ tooltip: classes.fontSize }}>
           <Typography noWrap variant="h5" gutterBottom>
             {address}
           </Typography>
@@ -131,7 +131,7 @@ function App() {
         <Typography variant="h4" gutterBottom>
           Contract Address:
         </Typography>
-        <Tooltip title={'Click to copy!'} onClick={copyToClipboard(esvtAddress)} classes={{ tooltip: classes.fontSize }}>
+        <Tooltip title={'Click to copy!'} onClick={() => {copyToClipboard(esvtAddress)}} classes={{ tooltip: classes.fontSize }}>
           <Typography noWrap variant="h5" gutterBottom>
             {esvtAddress}
           </Typography>
